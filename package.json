@@ -12,9 +12,10 @@
     "format:check": "prettier --check \"src/**/*.ts\""
   },
   "lint-staged": {
-    "*.ts": [
+    "**/*.ts": [
       "prettier --write",
-      "eslint --fix"
+      "eslint --fix",
+      "git add"
     ]
   },
   "keywords": [],
