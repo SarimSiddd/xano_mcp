@@ -1,8 +1,8 @@
-import { xano } from "./api/xano/services/auth";
-import { xano as xanoRequests } from "./api/xano/types/requests";
+import { auth } from "./api/xano/services/auth";
+import config from "./config";
 
 async function main() {
-  const result = await xano.auth(xanoRequests.api_key);
+  const result = await auth(config.xano.apiKey);
   if (result.error != null) {
     console.log("Something went wrong:", result);
   } else {
