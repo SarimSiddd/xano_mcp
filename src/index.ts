@@ -1,7 +1,7 @@
 import { auth } from "./api/xano/services/auth";
 import config from "./config";
 
-async function main() {
+async function main(): Promise<void> {
   const result = await auth(config.xano.apiKey);
   if (result.error != null) {
     console.log("Something went wrong:", result);
@@ -10,8 +10,6 @@ async function main() {
   }
 }
 
-main().catch((error) => {
-  console.log("Error:", error);
-});
+main().catch((error) => console.log("Error:", error));
 
 console.log("After async function call");
