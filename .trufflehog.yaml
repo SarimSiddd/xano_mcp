@@ -1,0 +1,12 @@
+# Exclude patterns for TruffleHog
+exclude_paths:
+  - "node_modules/**"
+  - "build/**"
+  - "dist/**"
+  - "coverage/**"
+  - "**/package-lock.json"
+  - "**/yarn.lock"
+
+# Optional: Additional configuration
+allow_only_verified_secrets: true
+verify_ssl: true
