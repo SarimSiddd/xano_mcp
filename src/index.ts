@@ -1,25 +1,17 @@
-import {xano} from '../src/api/xano/services/auth';
-import {xano as xanoRequests} from '../src/api/xano/types/requests';
+import { xano } from "./api/xano/services/auth";
+import { xano as xanoRequests } from "./api/xano/types/requests";
 
-(async () => {
-    try {
-        const result = await xano.auth(xanoRequests.api_key);
+async function main() {
+  const result = await xano.auth(xanoRequests.api_key);
+  if (result.error != null) {
+    console.log("Something went wrong:", result);
+  } else {
+    console.log("Success:", result.success);
+  }
+}
 
-        if (result.error != null)
-        {
-            console.log('Something went wrong:', result);
-        }
-        else
-        {
-            console.log('Printing access_token obj: ' , JSON.stringify(result.success?.extras.instance));
-        }
-    }
-    catch (error)
-    {
-        console.log('Auth error:', error);
-    }
+main().catch((error) => {
+  console.log("Error:", error);
+});
 
-})();
-
-
-console.log('After async function call');
+console.log("After async function call");
