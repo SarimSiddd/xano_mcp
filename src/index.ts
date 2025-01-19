@@ -4,11 +4,14 @@ import config from "./config";
 
 let client = new ApiClient(config);
 let workspaceService = new WorkspaceService(client.axiosInstance);
+let tableService = workspaceService.getTableService(92101);
 
 (async () => {
   let resp = await workspaceService.get();
   let space = resp.data;
   console.log("\n", JSON.stringify(space));
+  let resp2 = await tableService.get();
+  console.log("\n", JSON.stringify(resp2.data));
 })();
 
 // import { auth } from "./api/xano/services/auth";
