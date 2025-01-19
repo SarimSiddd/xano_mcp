@@ -10,8 +10,8 @@ let tableService = workspaceService.getTableService(92101);
   let resp = await workspaceService.get();
   let space = resp.data;
   console.log("\n", JSON.stringify(space));
-  let resp2 = await tableService.get();
-  console.log("\n", JSON.stringify(resp2.data));
+  let resp2 = await tableService.listAll();
+  console.log("\n", JSON.stringify(resp2));
 })();
 
 // import { auth } from "./api/xano/services/auth";
