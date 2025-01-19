@@ -8,3 +8,8 @@ export interface table {
   guid: string;
   auth: boolean;
 }
+
+export interface tableQueryParams {
+  page?: number;
+  itemsPerPage?: number;
+}

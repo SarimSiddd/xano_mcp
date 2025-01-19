@@ -1,5 +1,6 @@
 import { AxiosInstance, AxiosResponse } from "axios";
-import { table } from "../../models/table/table";
+import { table, tableQueryParams } from "../../models/table/table";
+import { paginatedResponse } from "../../models/common/pagination";
 
 export class TableService {
   constructor(
@@ -11,7 +12,27 @@ export class TableService {
     return `/workspace/${this.workspaceId}/table`;
   }
 
-  async get(): Promise<AxiosResponse<table[]>> {
-    return this.client.get(this.basePath);
+  async get(
+    params?: tableQueryParams,
+  ): Promise<AxiosResponse<paginatedResponse<table>>> {
+    return this.client.get<paginatedResponse<table>>(this.basePath, { params });
+  }
+
+  async listAll(): Promise<table[]> {
+    const allTables: table[] = [];
+    let currPage = 1;
+
+    while (true) {
+      const response = await this.get({ page: currPage });
+      allTables.push(...response.data.items);
+
+      if (!response.data.nextPage) {
+        break;
+      }
+
+      currPage = response.data.nextPage;
+    }
+
+    return allTables;
   }
 }
