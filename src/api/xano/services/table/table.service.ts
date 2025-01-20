@@ -1,5 +1,9 @@
 import { AxiosInstance, AxiosResponse } from "axios";
-import { table, tableQueryParams } from "../../models/table/table";
+import {
+  table,
+  tableCreateParams,
+  tableQueryParams,
+} from "../../models/table/table";
 import { paginatedResponse } from "../../models/common/pagination";
 
 export class TableService {
@@ -10,6 +14,10 @@ export class TableService {
 
   private get basePath(): string {
     return `/workspace/${this.workspaceId}/table`;
+  }
+
+  async post(data: tableCreateParams): Promise<AxiosResponse<table>> {
+    return this.client.post<table>(this.basePath, data);
   }
 
   async get(

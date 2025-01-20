@@ -12,6 +12,8 @@ let tableService = workspaceService.getTableService(92101);
   console.log("\n", JSON.stringify(space));
   let resp2 = await tableService.listAll();
   console.log("\n", JSON.stringify(resp2));
+  let resp3 = await tableService.post({ name: "Newtable" });
+  console.log(resp3);
 })();
 
 // import { auth } from "./api/xano/services/auth";

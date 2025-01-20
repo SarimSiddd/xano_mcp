@@ -13,3 +13,9 @@ export interface tableQueryParams {
   page?: number;
   itemsPerPage?: number;
 }
+
+export interface tableCreateParams {
+  name: string;
+  description?: string;
+  docs?: string;
+}
