@@ -5,6 +5,7 @@ import {
   tableQueryParams,
 } from "../../models/table/table";
 import { paginatedResponse } from "../../models/common/pagination";
+import { idResponse } from "../../models/common/types";
 
 export class TableService {
   constructor(
@@ -16,8 +17,12 @@ export class TableService {
     return `/workspace/${this.workspaceId}/table`;
   }
 
-  async post(data: tableCreateParams): Promise<AxiosResponse<table>> {
-    return this.client.post<table>(this.basePath, data);
+  async post(data: tableCreateParams): Promise<AxiosResponse<idResponse>> {
+    return this.client.post<idResponse>(this.basePath, data);
+  }
+
+  async delete(id: number): Promise<AxiosResponse<null>> {
+    return this.client.delete(this.basePath + `/${id}`);
   }
 
   async get(

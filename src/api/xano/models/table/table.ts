@@ -19,3 +19,7 @@ export interface tableCreateParams {
   description?: string;
   docs?: string;
 }
+
+export interface onTableCreate {
+  id: number;
+}
