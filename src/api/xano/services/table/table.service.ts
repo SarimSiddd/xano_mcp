@@ -1,15 +1,16 @@
 import { AxiosInstance, AxiosResponse } from "axios";
+import { table, tableCreateParams } from "../../models/table/table";
 import {
-  table,
-  tableCreateParams,
-  tableQueryParams,
-} from "../../models/table/table";
-import { paginatedResponse } from "../../models/common/pagination";
+  paginatedResponse,
+  paginationParams,
+} from "../../models/common/pagination";
 import { idResponse } from "../../models/common/types";
 import { SchemaService } from "./schema.service";
+import { ContentService } from "./content.service";
 
 export class TableService {
   private schemaServices: Map<number, SchemaService> = new Map();
+  private contentServices: Map<number, ContentService> = new Map();
 
   constructor(
     private readonly client: AxiosInstance,
@@ -29,10 +30,26 @@ export class TableService {
   }
 
   async get(
-    params?: tableQueryParams,
+    params?: paginationParams,
   ): Promise<AxiosResponse<paginatedResponse<table>>> {
     return this.client.get<paginatedResponse<table>>(this.basePath, { params });
   }
+
+  getContentService(tableId: number): ContentService {
+    let contentService = this.contentServices.get(tableId);
+
+    if (!contentService) {
+      contentService = new ContentService(
+        this.client,
+        this.workspaceId,
+        tableId,
+      );
+      this.contentServices.set(tableId, contentService);
+    }
+
+    return contentService;
+  }
+  ß;
 
   getSchemaService(tableId: number): SchemaService {
     let schemaService = this.schemaServices.get(tableId);

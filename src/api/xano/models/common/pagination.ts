@@ -4,3 +4,8 @@ export interface paginatedResponse<T> {
   nextPage?: number;
   prevPage?: number;
 }
+
+export interface paginationParams {
+  page?: number;
+  itemsPerPage?: number;
+}
