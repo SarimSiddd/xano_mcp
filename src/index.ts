@@ -5,6 +5,7 @@ import config from "./config";
 let client = new ApiClient(config);
 let workspaceService = new WorkspaceService(client.axiosInstance);
 let tableService = workspaceService.getTableService(92101);
+let schemaService = tableService.getSchemaService(416127);
 
 (async () => {
   let resp = await workspaceService.get();
@@ -12,10 +13,12 @@ let tableService = workspaceService.getTableService(92101);
   console.log("\n", JSON.stringify(space));
   let resp2 = await tableService.listAll();
   console.log("\n", JSON.stringify(resp2));
-  let resp3 = await tableService.post({ name: "Newtable" });
-  console.log(JSON.stringify(resp3.data));
-  let resp4 = await tableService.delete(resp3.data.id);
-  console.log(resp4);
+  //let resp3 = await tableService.post({ name: "Newtable" });
+  //console.log(JSON.stringify(resp3.data));
+  //let resp4 = await tableService.delete(resp3.data.id);
+  //console.log(resp4);
+  let resp3 = await schemaService.get();
+  console.log("\n", JSON.stringify(resp3.data));
 })();
 
 // import { auth } from "./api/xano/services/auth";

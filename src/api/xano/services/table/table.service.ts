@@ -6,8 +6,11 @@ import {
 } from "../../models/table/table";
 import { paginatedResponse } from "../../models/common/pagination";
 import { idResponse } from "../../models/common/types";
+import { SchemaService } from "./schema.service";
 
 export class TableService {
+  private schemaServices: Map<number, SchemaService> = new Map();
+
   constructor(
     private readonly client: AxiosInstance,
     private readonly workspaceId: number,
@@ -29,6 +32,17 @@ export class TableService {
     params?: tableQueryParams,
   ): Promise<AxiosResponse<paginatedResponse<table>>> {
     return this.client.get<paginatedResponse<table>>(this.basePath, { params });
+  }
+
+  getSchemaService(tableId: number): SchemaService {
+    let schemaService = this.schemaServices.get(tableId);
+
+    if (!schemaService) {
+      schemaService = new SchemaService(this.client, this.workspaceId, tableId);
+      this.schemaServices.set(tableId, schemaService);
+    }
+
+    return schemaService;
   }
 
   async listAll(): Promise<table[]> {
