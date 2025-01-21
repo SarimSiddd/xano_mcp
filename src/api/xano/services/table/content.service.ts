@@ -24,6 +24,10 @@ export class ContentService {
     });
   }
 
+  async put(id: number, data: content): Promise<AxiosResponse<content>> {
+    return this.client.put<content>(this.basePath + `/${id}`, data);
+  }
+
   async listAll(): Promise<content[]> {
     const allContent: content[] = [];
     let currPage = 1;

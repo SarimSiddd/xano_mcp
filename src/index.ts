@@ -26,5 +26,15 @@ let contentService = tableService.getContentService(416127);
 
   let mappedValues = getValuesUsingSchema(tableSchema, content[0]);
 
+  let newcontent = contentService.put(mappedValues.get("id") as number, {
+    created_at: 1736342870473,
+    account_id: "CR90000000",
+    client_id: 1,
+    balance: 10,
+    currency: "USD",
+    lock: false,
+  });
+
   console.log(mappedValues);
+  console.log(newcontent);
 })();
