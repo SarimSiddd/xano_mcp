@@ -49,7 +49,6 @@ export class TableService {
 
     return contentService;
   }
-  ß;
 
   getSchemaService(tableId: number): SchemaService {
     let schemaService = this.schemaServices.get(tableId);
