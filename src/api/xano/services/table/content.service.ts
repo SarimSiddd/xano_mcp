@@ -28,8 +28,8 @@ export class ContentService {
     return this.client.put<content>(this.basePath + `/${id}`, data);
   }
 
-  async post(id: number, data: content): Promise<AxiosResponse<content>> {
-    return this.client.post<content>(this.basePath + `/${id}`, data);
+  async post(data: content): Promise<AxiosResponse<content>> {
+    return this.client.post<content>(this.basePath, data);
   }
 
   async listAll(): Promise<content[]> {

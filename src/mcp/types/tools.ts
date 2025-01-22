@@ -9,25 +9,28 @@ export interface CreateTableInput {
 }
 
 export interface GetTableContentInput {
-  workspaceId: string;
-  tableId: string;
+  workspaceId: number;
+  tableId: number;
   pagination?: paginationParams;
   filter?: Record<string, any>;
 }
 
 export interface AddTableContentInput {
-  tableId: string;
+  workspaceId: number;
+  tableId: number;
   content: Record<string, any>;
 }
 
 export interface UpdateTableContentInput {
-  tableId: string;
+  workspaceId: number;
+  tableId: number;
   contentId: string;
   content: Record<string, any>;
 }
 
 export interface DeleteTableContentInput {
-  tableId: string;
+  workspaceId: number;
+  tableId: number;
   contentId: string;
 }
 

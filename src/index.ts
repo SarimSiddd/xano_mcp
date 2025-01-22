@@ -6,10 +6,8 @@ import config from "./config.js";
 // Initialize API client and services
 const client = new ApiClient(config);
 const workspaceService = new WorkspaceService(client.axiosInstance);
-const tableService = workspaceService.getTableService(92101);
-
 // Initialize and start MCP server
-const mcpServer = new XanoMcpServer(tableService);
+const mcpServer = new XanoMcpServer(workspaceService);
 mcpServer.start().catch(console.error);
 
 // Example usage of the API client (commented out)
