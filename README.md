@@ -8,6 +8,9 @@ A Model Context Protocol (MCP) server implementation for interacting with the Xa
 - Type-safe API interactions using TypeScript
 - Environment-based configuration
 - MCP-compliant interface
+- Workspace management tools
+- Table content operations (create, read, update)
+- Improved error handling with detailed messages
 
 ## Installation
 
@@ -55,13 +58,77 @@ xano_mcp/
 ├── src/
 │   ├── api/
 │   │   └── xano/
-│   │       ├── services/    # API service implementations
-│   │       └── types/       # TypeScript type definitions
-│   ├── config.ts           # Configuration management
-│   └── index.ts           # Main entry point
-├── .env                   # Environment variables (not in git)
-├── .env.example          # Example environment variables
-└── tsconfig.json         # TypeScript configuration
+│   │       ├── client/       # API client implementation
+│   │       ├── models/       # Data models and types
+│   │       ├── services/     # API service implementations
+│   │       └── utils/        # Utility functions
+│   ├── mcp/
+│   │   ├── server/          # MCP server implementation
+│   │   ├── tools/           # MCP tool implementations
+│   │   └── types/           # Tool-specific types
+│   ├── config.ts            # Configuration management
+│   └── index.ts             # Main entry point
+├── .env                     # Environment variables (not in git)
+├── .env.example            # Example environment variables
+└── tsconfig.json           # TypeScript configuration
+```
+
+## Available MCP Tools
+
+### Workspace Tools
+- `get_workspaces`: List all available workspaces
+
+### Table Tools
+- `create_table`: Create a new table in a workspace
+- `get_table_content`: Get content from a table with pagination support
+- `add_table_content`: Add new content to a table
+- `update_table_content`: Update existing content in a table
+
+## Usage Examples
+
+### Working with Workspaces
+```typescript
+// List available workspaces
+const result = await mcp.use_tool("get_workspaces", {});
+console.log('Workspaces:', result);
+```
+
+### Managing Tables
+```typescript
+// Create a new table
+const createResult = await mcp.use_tool("create_table", {
+  workspaceId: 123,
+  name: "MyTable"
+});
+
+// Add content to a table
+const addResult = await mcp.use_tool("add_table_content", {
+  workspaceId: 123,
+  tableId: 456,
+  content: {
+    created_at: "2024-01-22T17:07:00.000Z"
+  }
+});
+
+// Get table content with pagination
+const getResult = await mcp.use_tool("get_table_content", {
+  workspaceId: 123,
+  tableId: 456,
+  pagination: {
+    page: 1,
+    items: 50
+  }
+});
+
+// Update table content
+const updateResult = await mcp.use_tool("update_table_content", {
+  workspaceId: 123,
+  tableId: 456,
+  contentId: "789",
+  content: {
+    created_at: "2024-01-22T17:07:00.000Z"
+  }
+});
 ```
 
 ## Environment Variables
@@ -73,15 +140,14 @@ xano_mcp/
 | NODE_ENV | Environment (development/production) | No | development |
 | API_TIMEOUT | API request timeout in milliseconds | No | 10000 |
 
-## Usage
+## Error Handling
 
-The server provides MCP tools for interacting with Xano:
-
-```typescript
-// Example usage in an MCP client
-const result = await xano.auth(apiKey);
-console.log('Authentication result:', result);
-```
+The server provides detailed error messages for:
+- Invalid parameters
+- Authentication failures
+- API request failures
+- Content validation errors
+- Unknown tool requests
 
 ## Security
 
