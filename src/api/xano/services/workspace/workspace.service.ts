@@ -1,6 +1,6 @@
-import { workspace } from "../../models/workspace/workspace";
+import { workspace } from "../../models/workspace/workspace.js";
 import { AxiosInstance, AxiosResponse } from "axios";
-import { TableService } from "../table/table.service";
+import { TableService } from "../table/table.service.js";
 
 export class WorkspaceService {
   private readonly basePath = "/workspace";

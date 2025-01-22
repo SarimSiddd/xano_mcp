@@ -1,8 +1,8 @@
-import { content } from "../../models/table/content/content";
+import { content } from "../../models/table/content/content.js";
 import {
   paginationParams,
   paginatedResponse,
-} from "../../models/common/pagination";
+} from "../../models/common/pagination.js";
 import { AxiosInstance, AxiosResponse } from "axios";
 
 export class ContentService {

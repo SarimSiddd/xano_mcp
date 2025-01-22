@@ -1,7 +1,7 @@
-import { ApiClient } from "./api/xano/client/base";
-import { WorkspaceService } from "./api/xano/services/workspace/workspace.service";
-import { XanoMcpServer } from "./mcp/server/server";
-import config from "./config";
+import { ApiClient } from "./api/xano/client/base.js";
+import { WorkspaceService } from "./api/xano/services/workspace/workspace.service.js";
+import { XanoMcpServer } from "./mcp/server/server.js";
+import config from "./config.js";
 
 // Initialize API client and services
 const client = new ApiClient(config);

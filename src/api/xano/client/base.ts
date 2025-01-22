@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
-import { Config } from "../../../config";
-import { authInterceptor } from "./interceptors/auth";
-import { responseInterceptor } from "./interceptors/response";
+import { Config } from "../../../config.js";
+import { authInterceptor } from "./interceptors/auth.js";
+import { responseInterceptor } from "./interceptors/response.js";
 
 export class ApiClient {
   private client: AxiosInstance;

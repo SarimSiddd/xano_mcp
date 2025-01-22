@@ -1,12 +1,12 @@
 import { AxiosInstance, AxiosResponse } from "axios";
-import { table, tableCreateParams } from "../../models/table/table";
+import { table, tableCreateParams } from "../../models/table/table.js";
 import {
   paginatedResponse,
   paginationParams,
-} from "../../models/common/pagination";
-import { idResponse } from "../../models/common/types";
-import { SchemaService } from "./schema.service";
-import { ContentService } from "./content.service";
+} from "../../models/common/pagination.js";
+import { idResponse } from "../../models/common/types.js";
+import { SchemaService } from "./schema.service.js";
+import { ContentService } from "./content.service.js";
 
 export class TableService {
   private schemaServices: Map<number, SchemaService> = new Map();

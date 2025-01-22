@@ -1,5 +1,5 @@
 import { AxiosInstance, AxiosResponse } from "axios";
-import { schema } from "../../models/table/schema/schema";
+import { schema } from "../../models/table/schema/schema.js";
 
 export class SchemaService {
   constructor(

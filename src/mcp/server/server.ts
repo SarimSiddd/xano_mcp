@@ -6,9 +6,9 @@ import {
   ListToolsRequestSchema,
   McpError,
 } from "@modelcontextprotocol/sdk/types.js";
-import { TableService } from "../../api/xano/services/table/table.service";
-import { CreateTableTool } from "../tools/table/create";
-import { CreateTableInput } from "../types/tools";
+import { TableService } from "../../api/xano/services/table/table.service.js";
+import { CreateTableTool } from "../tools/table/create.js";
+import { CreateTableInput } from "../types/tools.js";
 
 export class XanoMcpServer {
   private server: Server;
@@ -23,7 +23,12 @@ export class XanoMcpServer {
       },
       {
         capabilities: {
-          tools: {},
+          tools: {
+            create_table: {
+              ...CreateTableTool.getMetadata(),
+              inputSchema: CreateTableTool.getInputSchema(),
+            },
+          },
         },
       },
     );
