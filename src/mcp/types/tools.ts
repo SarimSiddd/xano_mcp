@@ -43,3 +43,8 @@ export interface CreateWorkspaceInput {
   name: string;
   description?: string;
 }
+
+// Table List Tool Input Type
+export interface GetAllTablesInput {
+  workspaceId: number;
+}

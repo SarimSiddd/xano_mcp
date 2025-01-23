@@ -13,6 +13,7 @@ import { GetTableContentTool } from "../tools/table/get-content.js";
 import { AddTableContentTool } from "../tools/table/add-content.js";
 import { UpdateTableContentTool } from "../tools/table/update-content.js";
 import { GetWorkspacesTool } from "../tools/workspace/get.js";
+import { GetAllTablesTool } from "../tools/table/get-all-tables.js";
 import {
   CreateTableInput,
   GetTableContentInput,
@@ -23,6 +24,7 @@ import {
 export class XanoMcpServer {
   private server: Server;
   private getWorkspacesTool: GetWorkspacesTool;
+  private getAllTablesTool: GetAllTablesTool;
 
   constructor(private readonly workspaceService: WorkspaceService) {
     // Initialize the server with metadata
@@ -54,13 +56,20 @@ export class XanoMcpServer {
               ...UpdateTableContentTool.getMetadata(),
               inputSchema: UpdateTableContentTool.getInputSchema(),
             },
+            get_all_tables: {
+              ...GetAllTablesTool.getMetadata(),
+              inputSchema: GetAllTablesTool.getInputSchema(),
+            },
           },
         },
       },
     );
 
-    // Initialize workspace tool
+    // Initialize tools
     this.getWorkspacesTool = new GetWorkspacesTool(workspaceService);
+    this.getAllTablesTool = new GetAllTablesTool(
+      workspaceService.getTableService(0),
+    ); // Will be replaced with correct workspaceId in execute
 
     // Set up request handlers
     this.setupRequestHandlers();
@@ -96,6 +105,10 @@ export class XanoMcpServer {
         {
           ...UpdateTableContentTool.getMetadata(),
           inputSchema: UpdateTableContentTool.getInputSchema(),
+        },
+        {
+          ...GetAllTablesTool.getMetadata(),
+          inputSchema: GetAllTablesTool.getInputSchema(),
         },
       ],
     }));
@@ -310,6 +323,43 @@ export class XanoMcpServer {
             throw new McpError(
               ErrorCode.InternalError,
               "Failed to update table content: Unknown error",
+            );
+          }
+        }
+        case "get_all_tables": {
+          try {
+            if (
+              !request.params.arguments ||
+              typeof request.params.arguments.workspaceId !== "number"
+            ) {
+              throw new McpError(
+                ErrorCode.InvalidParams,
+                "Invalid arguments: workspaceId (number) is required",
+              );
+            }
+            const workspaceId = request.params.arguments.workspaceId;
+            const tableService =
+              this.workspaceService.getTableService(workspaceId);
+            this.getAllTablesTool = new GetAllTablesTool(tableService);
+            const tables = await this.getAllTablesTool.execute({ workspaceId });
+            return {
+              content: [
+                {
+                  type: "text",
+                  text: JSON.stringify(tables, null, 2),
+                },
+              ],
+            };
+          } catch (error) {
+            if (error instanceof Error) {
+              throw new McpError(
+                ErrorCode.InternalError,
+                `Failed to get all tables: ${error.message}`,
+              );
+            }
+            throw new McpError(
+              ErrorCode.InternalError,
+              "Failed to get all tables: Unknown error",
             );
           }
         }
