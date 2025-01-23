@@ -83,6 +83,7 @@ xano_mcp/
 - `get_table_content`: Get content from a table with pagination support
 - `add_table_content`: Add new content to a table
 - `update_table_content`: Update existing content in a table
+- `get_all_tables`: List all tables in a workspace with detailed information
 
 ## Usage Examples
 
@@ -129,6 +130,27 @@ const updateResult = await mcp.use_tool("update_table_content", {
     created_at: "2024-01-22T17:07:00.000Z"
   }
 });
+
+// List all tables in a workspace
+const tables = await mcp.use_tool("get_all_tables", {
+  workspaceId: 123
+});
+console.log('Tables:', tables);
+// Returns an array of tables with their details:
+// [
+//   {
+//     id: number,
+//     name: string,
+//     description: string,
+//     created_at: string,
+//     updated_at: string,
+//     guid: string,
+//     auth: boolean,
+//     tag: string[],
+//     workspaceId: number
+//   },
+//   ...
+// ]
 ```
 
 ## Environment Variables
